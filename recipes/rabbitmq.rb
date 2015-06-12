@@ -26,6 +26,7 @@ if node.sensu.use_ssl
   node.override.rabbitmq.ssl_port = node.sensu.rabbitmq.port
   node.override.rabbitmq.ssl_verify = "verify_peer"
   node.override.rabbitmq.ssl_fail_if_no_peer_cert = true
+  node.override.rabbitmq.use_distro_version = true
 
   ssl_directory = "/etc/rabbitmq/ssl"
 

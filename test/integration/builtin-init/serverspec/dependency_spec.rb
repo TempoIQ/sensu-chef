@@ -10,7 +10,7 @@ describe file("/opt/sensu/embedded/bin/ruby") do
   it { should be_executable }
 end
 
-describe command("ps aux | grep rabbitmq-server | grep -v grep") do
+describe command("ps aux | egrep rabbitmq[-_]server | grep -v grep") do
   its(:exit_status) { should eq 0 }
 end
 

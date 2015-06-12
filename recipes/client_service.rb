@@ -17,7 +17,21 @@
 # limitations under the License.
 #
 
+execute 'reload_systemctl' do
+  command '/usr/bin/systemctl daemon-reload'
+  only_if { node.sensu.init_style == 'systemd' }
+  action  :nothing
+end
+
+link '/usr/lib/systemd/system/sensu-client.service' do
+  to        '/usr/share/sensu/systemd/sensu-client.service'
+  link_type :hard
+  only_if   { node.sensu.init_style == 'systemd' }
+  notifies  :run, 'execute[reload_systemctl]', :immediately
+  action    :create
+end
+
 sensu_service "sensu-client" do
   init_style node.sensu.init_style
-  action [:enable, :start]
+  action     [:enable, :start]
 end
